@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import { type } from 'node:os';
+import { createContext, useReducer } from 'react';
 import './App.css';
+import User from './components/User';
+import { actionType, initialState, reducer } from './reducer';
+
+
+type cxtType = {
+  state: typeof initialState,
+  dispatch: React.Dispatch<actionType>
+}
+
+export const UserContext = createContext({} as cxtType)
+
 
 function App() {
+  
+const [state, dispatch] = useReducer(reducer, initialState)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ state, dispatch }}>
+
+      {/* <Profile name="Utkarsh" age={25} status='single'>
+        <span style={{ color: 'green' }}>salary - 10ctc</span>
+      </Profile>
+      <Profile name="Shubh" status='committed' >
+        <span style={{ color: 'green' }}>salary - 5ctc</span>
+
+      </Profile> */}
+      {/* <Todo /> */}
+      <User />
+    </UserContext.Provider>
   );
 }
 
